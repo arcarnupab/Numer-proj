@@ -1,0 +1,23 @@
+.home {
+    text-align: center;
+}
+
+h1.head {
+    text-align: center;
+    color: #3b2f2f;
+    text-decoration: underline;
+    font-size: 60px;
+}
+
+body.text {
+    font-size: 40px;
+    font-weight: lighter;
+}
+
+p.listhead{
+    font-size: 20px;
+    font-weight: bold;
+}
+.container{
+    text-align: center;
+}
