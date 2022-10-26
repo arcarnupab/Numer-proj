@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { create, all } from 'mathjs'
 
 function NewtonRaphson() {
   var Parser = require('expr-eval').Parser;
@@ -10,6 +11,8 @@ function NewtonRaphson() {
   const [func, setfunc] = useState('')
   const [err, seterr] = useState('')
   const [x1, setx1] = useState('')
+  const config = { }
+  const math = create(all, config)
   const submit = e => {
     e.preventDefault()
     fx = func
@@ -18,29 +21,33 @@ function NewtonRaphson() {
 
     let ER = parseFloat(er);
     let X = parseFloat(x);
-    Onepoint(fx,ER,X)
+    Newtonrap(fx,ER,X)  
   }
 
-  function Onepoint(Func,Err,X){
+  function Newtonrap(Func,Err,X){
     var parser = new Parser();
     var expr = parser.parse(Func);
     let fxx =  expr.evaluate({ x: X })
     let Er = 100.0
-
+    let dfx = math.derivative(Func,'x')
+    let Dx = dfx.evaluate({x:X})
     let xnew = 0
     let i=0
     let t=""
     while(Er>Err){
-      xnew = fxx
+      xnew = X-(fxx/Dx)
       Er = Math.abs((xnew-X)/xnew)*100.0
       X=xnew
+      Dx = dfx.evaluate({x:X})
+      fxx = expr.evaluate({x:X})
       i++
       t+=i
       /*console.log("Round:"+i)
       console.log("X="+X+" Fxx="+fxx)
-      console.log("Error="+Er)*/
+      console.log("Error="+Er)
+      console.log(dfx.evaluate({x:X}))*/
       document.getElementById("r").innerHTML = "Iteration:"+i;
-      document.getElementById("x").innerHTML = "X="+X+", Fxx="+fxx;
+      document.getElementById("x").innerHTML = "X="+X+", Fxx="+fxx+", Dfx="+Dx;
       document.getElementById("er").innerHTML = "Error="+Er+"%";
     }
   }
