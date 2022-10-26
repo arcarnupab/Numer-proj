@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-function OnePointIteration() {
+function NewtonRaphson() {
   var Parser = require('expr-eval').Parser;
   var fx = 'x';
   var er = 'e';
@@ -44,11 +44,9 @@ function OnePointIteration() {
       document.getElementById("er").innerHTML = "Error="+Er+"%";
     }
   }
-
-
   return (
-    <div className='onepointiteration'>
-      <h1>One-Point Iteration Method</h1>
+    <div className='newtonraphson'>
+      <h1>Newton-Raphson Method</h1>
       <form onSubmit={submit}>
         <label for="function">Enter function is here {'->'}</label>
         <input 
@@ -80,4 +78,4 @@ function OnePointIteration() {
   )
 }
 
-export default OnePointIteration
+export default NewtonRaphson

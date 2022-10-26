@@ -33,6 +33,16 @@ export const SidebarData = [
                 path: '/RootOfEquations/OnePointIteration',
                 icon: <RiIcons.RiCalculatorFill/>
             },
+            {
+                title: 'NewtonRaphson',
+                path: '/RootOfEquations/NewtonRaphson',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+            {
+                title: 'Secant',
+                path: '/RootOfEquations/Secant',
+                icon: <RiIcons.RiCalculatorFill/>
+            },            
         ]
     },
     {

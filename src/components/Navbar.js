@@ -14,10 +14,10 @@ const  Navbar = () => {
           <NavLink to='/' activeStyle>
             Home
           </NavLink>
-          <NavLink to='/Bisection' activeStyle>
+          <NavLink to='/RootOfEquations/Bisection' activeStyle>
             Bisection
           </NavLink>
-          <NavLink to='/FalsePosition' activeStyle>
+          <NavLink to='/RootOfEquations/FalsePosition' activeStyle>
             FalsePosition
           </NavLink>
         </NavMenu>
