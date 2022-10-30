@@ -11,6 +11,12 @@ function NewtonRaphson() {
   const [func, setfunc] = useState('')
   const [err, seterr] = useState('')
   const [x1, setx1] = useState('')
+  const ansround = []
+  const ansx = []
+  const ansxn = []
+  const ansfx = []
+  const ansdfx = []
+  const anser = []
   const config = { }
   const math = create(all, config)
   const submit = e => {
@@ -27,28 +33,35 @@ function NewtonRaphson() {
   function Newtonrap(Func,Err,X){
     var parser = new Parser();
     var expr = parser.parse(Func);
-    let fxx =  expr.evaluate({ x: X })
     let Er = 100.0
     let dfx = math.derivative(Func,'x')
-    let Dx = dfx.evaluate({x:X})
     let xnew = 0
     let i=0
     let t=""
     while(Er>Err){
+      ansround.push(i)
+      ansx.push(X.toFixed(6))
+
+      let fxx = expr.evaluate({x:X})
+      let Dx = dfx.evaluate({x:X})
       xnew = X-(fxx/Dx)
       Er = Math.abs((xnew-X)/xnew)*100.0
       X=xnew
-      Dx = dfx.evaluate({x:X})
-      fxx = expr.evaluate({x:X})
+            
+      ansfx.push(fxx.toFixed(6))
+      ansdfx.push(Dx.toFixed(6))
+      ansxn.push(xnew.toFixed(6))
+      anser.push(Er.toFixed(6))
+
+      t+="Iteration: "+ansround[i]+" |X= "+ansx[i]+", Fx= "+ansfx[i]+", Dfx= "+ansdfx[i]+", Xnew= "+ansxn[i]+", Error="+anser[i]+"%"
+      t+="<br/>"
+      document.getElementById("ans").innerHTML = t
+      
       i++
-      t+=i
       /*console.log("Round:"+i)
       console.log("X="+X+" Fxx="+fxx)
       console.log("Error="+Er)
       console.log(dfx.evaluate({x:X}))*/
-      document.getElementById("r").innerHTML = "Iteration:"+i;
-      document.getElementById("x").innerHTML = "X="+X+", Fxx="+fxx+", Dfx="+Dx;
-      document.getElementById("er").innerHTML = "Error="+Er+"%";
     }
   }
   return (
@@ -78,9 +91,8 @@ function NewtonRaphson() {
 
         <button>submit</button>
       </form><br/><br/>    
-      <p id='r'></p>
-      <p id='x'></p>
-      <p id='er'></p>
+      <p id='ans'></p>
+
     </div>
   )
 }

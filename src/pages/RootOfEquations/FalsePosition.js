@@ -12,12 +12,29 @@ function FalsePosition() {
   const [err, seterr] = useState('')
   const [xl, setxl] = useState('')
   const [xr, setxr] = useState('')
+  const ansround = []
+  const ansxl = []
+  const ansfxl = []
+  const ansxr = []
+  const ansfxr = []
+  const ansx1 = []
+  const ansfx1 = []
+  const anser = []
+
   const submit = e => {
     e.preventDefault()
     fx = func
     er = err
     l = xl
     r = xr
+    ansround.splice(0)
+    ansxl.splice(0)
+    ansfxl.splice(0)
+    ansxr.splice(0)
+    ansfxr.splice(0)
+    ansx1.splice(0)
+    ansfx1.splice(0)
+    anser.splice(0)
 
     let ER = parseFloat(er);
     let L = parseFloat(l);
@@ -28,25 +45,26 @@ function FalsePosition() {
   function falsep(Func,Err,Xl,Xr){
     var parser = new Parser();
     var expr = parser.parse(Func);
-    let fxl =  expr.evaluate({ x: Xl })
-    let fxr =  expr.evaluate({ x: Xr })
-    let x1 = ((Xl*fxr)-(Xr*fxl))/(fxr-fxl);
-    let fx1 =  expr.evaluate({ x: x1 })
-    //console.log(fxl,fxr,x1,fx1)
+
     let Er = 100.0
-    if((fxr*fx1)<0){
-      Xl=x1
-    }
-    else{ Xr=x1 }
     let xnew = 0
     let i=0
     let t=""
+
     while(Er>Err){
-      x1 = ((Xl*fxr)-(Xr*fxl))/(fxr-fxl);
-      fx1 =  expr.evaluate({ x: x1 })
-      fxl =  expr.evaluate({ x: Xl })
-      fxr =  expr.evaluate({ x: Xr })
-      if((fxr*fx1)<=0){
+      let fxl =  expr.evaluate({ x: Xl })
+      let fxr =  expr.evaluate({ x: Xr })
+      let x1 = ((Xl*fxr)-(Xr*fxl))/(fxr-fxl);
+      let fx1 =  expr.evaluate({ x: x1 })
+      ansround.push(i)
+      ansxl.push(Xl.toFixed(6))
+      ansfxl.push(fxl.toFixed(6))
+      ansxr.push(Xr.toFixed(6))
+      ansfxr.push(fxr.toFixed(6))
+      ansx1.push(x1.toFixed(6))
+      ansfx1.push(fx1.toFixed(6))
+
+      if((fxr*fx1)<0){
         xnew=Xl
         Xl=x1
       }
@@ -55,19 +73,17 @@ function FalsePosition() {
         Xr=x1 
       }
       Er = Math.abs((x1-xnew)/x1)*100.0
+      
+      anser.push(Er.toFixed(6))
+      t += "Iteration: "+ansround[i]+" |Xl= "+ansxl[i]+", Fxl= "+ansfxl[i]+", Xr="+ansxr[i]+", Fxr="+ansfxr[i]+", X1="+ansx1[i]+", Fx1="+ansfx1[i]+", Error="+anser[i]+"%";
+      t += "<br>"
+      document.getElementById("ans").innerHTML = t;
       i++
-      t+=i
       /*console.log("Round:"+i)
       console.log("Xl="+Xl+" Fxl="+fxl)
       console.log("Xr="+Xr+" Fxr="+fxr)
       console.log("X1="+x1+" Fx1="+fx1)
       console.log("Error="+Er)*/
-      //document.getElementById("Answer").innerText = "Iteration:"+i+", Xl="+Xl+", Fxl="+fxl+", Xr="+Xr+", Fxr="+fxr+", Xm="+xm+", Fxl="+fxm+", Error="+Er;;
-      document.getElementById("r").innerHTML = "Iteration:"+i;
-      document.getElementById("xl").innerHTML = "Xl="+Xl+", Fxl="+fxl;
-      document.getElementById("xr").innerHTML = "Xr="+Xr+", Fxr="+fxr;
-      document.getElementById("x1").innerHTML = "X1="+x1+", Fx1="+fx1;
-      document.getElementById("er").innerHTML = "Error="+Er+"%";
     }
   }
 
@@ -106,11 +122,7 @@ function FalsePosition() {
 
         <button>submit</button>
       </form><br/><br/>
-      <p id='r'></p>
-      <p id='xl'></p>
-      <p id='xr'></p>
-      <p id='x1'></p>
-      <p id='er'></p>
+      <p id='ans'></p>
     </div>
   )
 }

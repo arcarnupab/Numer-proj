@@ -10,6 +10,10 @@ function OnePointIteration() {
   const [func, setfunc] = useState('')
   const [err, seterr] = useState('')
   const [x1, setx1] = useState('')
+  const ansround = []
+  const ansx = []
+  const ansfx = []
+  const anser = []
   const submit = e => {
     e.preventDefault()
     fx = func
@@ -22,26 +26,31 @@ function OnePointIteration() {
   }
 
   function Onepoint(Func,Err,X){
+    
     var parser = new Parser();
     var expr = parser.parse(Func);
-    let fxx =  expr.evaluate({ x: X })
     let Er = 100.0
 
     let xnew = 0
     let i=0
     let t=""
     while(Er>Err){
+      ansround.push(i)
+      ansx.push(X.toFixed(6))
+      let fxx =  expr.evaluate({ x: X })
       xnew = fxx
       Er = Math.abs((xnew-X)/xnew)*100.0
+      ansfx.push(fxx.toFixed(6))
+      anser.push(Er.toFixed(6))
       X=xnew
+      
+      t+="Iteration: "+ansround[i]+" |X= "+ansx[i]+", Fx= "+ansfx[i]+", Error="+anser[i]+"%"
+      t+="<br/>"
+      document.getElementById("ans").innerHTML = t
       i++
-      t+=i
       /*console.log("Round:"+i)
       console.log("X="+X+" Fxx="+fxx)
       console.log("Error="+Er)*/
-      document.getElementById("r").innerHTML = "Iteration:"+i;
-      document.getElementById("x").innerHTML = "X="+X+", Fxx="+fxx;
-      document.getElementById("er").innerHTML = "Error="+Er+"%";
     }
   }
 
@@ -73,9 +82,7 @@ function OnePointIteration() {
 
         <button>submit</button>
       </form><br/><br/>    
-      <p id='r'></p>
-      <p id='x'></p>
-      <p id='er'></p>
+      <p id='ans'></p>
     </div>
   )
 }

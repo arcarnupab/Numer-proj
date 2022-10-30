@@ -13,12 +13,29 @@ function Bisection() {
   const [err, seterr] = useState('')
   const [xl, setxl] = useState('')
   const [xr, setxr] = useState('')
+  const ansround = []
+  const ansxl = []
+  const ansfxl = []
+  const ansxr = []
+  const ansfxr = []
+  const ansxm = []
+  const ansfxm = []
+  const anser = []
+  
   const submit = e => {
     e.preventDefault()
     fx = func
     er = err
     l = xl
     r = xr
+    ansround.splice(0)
+    ansxl.splice(0)
+    ansfxl.splice(0)
+    ansxr.splice(0)
+    ansfxr.splice(0)
+    ansxm.splice(0)
+    ansfxm.splice(0)
+    anser.splice(0)
 
     let ER = parseFloat(er);
     let L = parseFloat(l);
@@ -29,25 +46,24 @@ function Bisection() {
   function Bisec(Func,Err,Xl,Xr){
     var parser = new Parser();
     var expr = parser.parse(Func);
-    let fxl =  expr.evaluate({ x: Xl })
-    let fxr =  expr.evaluate({ x: Xr })
-    let xm = (Xl+Xr)/2.0;
-    let fxm =  expr.evaluate({ x: xm })
-    //console.log(fxl,fxr,xm,fxm)
     let Er = 100.0
-    if((fxr*fxm)<0){
-      Xl=xm
-    }
-    else{ Xr=xm }
     let xnew = 0
     let i=0
     let t=""
     while(Er>Err){
-      xm = (Xl+Xr)/2.0;
-      fxm =  expr.evaluate({ x: xm })
-      fxl =  expr.evaluate({ x: Xl })
-      fxr =  expr.evaluate({ x: Xr })
-      if((fxr*fxm)<=0){
+      let xm = (Xl+Xr)/2.0;
+      let fxm =  expr.evaluate({ x: xm })
+      let fxl =  expr.evaluate({ x: Xl })
+      let fxr =  expr.evaluate({ x: Xr })
+      ansround.push(i)
+      ansxl.push(Xl.toFixed(6))
+      ansfxl.push(fxl.toFixed(6))
+      ansxr.push(Xr.toFixed(6))
+      ansfxr.push(fxr.toFixed(6))
+      ansxm.push(xm.toFixed(6))
+      ansfxm.push(fxm.toFixed(6))
+      
+      if((fxr*fxm)<0){
         xnew=Xl
         Xl=xm
       }
@@ -56,19 +72,17 @@ function Bisection() {
         Xr=xm 
       }
       Er = Math.abs((xm-xnew)/xm)*100.0
-      i++
-      t+=i
+      
+      anser.push(Er.toFixed(6))
       /*console.log("Round:"+i)
       console.log("Xl="+Xl+" Fxl="+fxl)
       console.log("Xr="+Xr+" Fxr="+fxr)
       console.log("Xm="+xm+" Fxm="+fxm)
       console.log("Error="+Er)*/
-      //document.getElementById("Answer").innerText = "Iteration:"+i+", Xl="+Xl+", Fxl="+fxl+", Xr="+Xr+", Fxr="+fxr+", Xm="+xm+", Fxl="+fxm+", Error="+Er;;
-      document.getElementById("r").innerHTML = "Iteration:"+i;
-      document.getElementById("xl").innerHTML = "Xl="+Xl+", Fxl="+fxl;
-      document.getElementById("xr").innerHTML = "Xr="+Xr+", Fxr="+fxr;
-      document.getElementById("xm").innerHTML = "Xm="+xm+", Fxl="+fxm;
-      document.getElementById("er").innerHTML = "Error="+Er+"%";
+      t += "Iteration: "+ansround[i]+" |Xl= "+ansxl[i]+", Fxl= "+ansfxl[i]+", Xr="+ansxr[i]+", Fxr="+ansfxr[i]+", Xm="+ansxm[i]+", Fxm="+ansfxm[i]+", Error="+anser[i]+"%";
+      t += "<br>"
+      document.getElementById("ans").innerHTML = t
+      i++
     }
   }
     
@@ -107,11 +121,7 @@ function Bisection() {
 
         <button>submit</button>
       </form><br/><br/>    
-      <p id='r'></p>
-      <p id='xl'></p>
-      <p id='xr'></p>
-      <p id='xm'></p>
-      <p id='er'></p>
+      <p id='ans'></p>
     </div>
   )
 }
