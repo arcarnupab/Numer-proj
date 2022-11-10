@@ -46,6 +46,60 @@ export const SidebarData = [
         ]
     },
     {
+        title: 'LinearAlgebra',
+        path: '/LinearAlgebra',
+        icon: <FaIcons.FaJs/>,
+        iconClosed: <RiIcons.RiArrowDownSFill/>,
+        iconOpened: <RiIcons.RiArrowUpSFill/>,
+        subNav: [
+            {
+                title: 'CramerRule',
+                path: '/LinearAlgebra/CramerRule',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+            {
+                title: 'GaussElimination',
+                path: '/LinearAlgebra/GaussElimination',
+                icon: <RiIcons.RiCalculatorFill/>
+            },
+            {
+                title: 'GaussJordan',
+                path: '/LinearAlgebra/GaussJordan',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+            {
+                title: 'MatrixInvertion',
+                path: '/LinearAlgebra/MatrixInvertion',
+                icon: <RiIcons.RiCalculatorFill/>
+            },
+            {
+                title: 'LuDecomposition',
+                path: '/LinearAlgebra/LuDecomposition',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+            {
+                title: 'Cholesky',
+                path: '/LinearAlgebra/Cholesky',
+                icon: <RiIcons.RiCalculatorFill/>
+            },
+            {
+                title: 'Jacobi',
+                path: '/LinearAlgebra/Jacobi',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+            {
+                title: 'GaussSeidel',
+                path: '/LinearAlgebra/GaussSeidel',
+                icon: <RiIcons.RiCalculatorFill/>
+            },
+            {
+                title: 'ConjugateGradient',
+                path: '/LinearAlgebra/ConjugateGradient',
+                icon: <RiIcons.RiCalculatorLine/>
+            },
+        ]
+    },
+    {
         title: 'Contact',
         path: '/Contact',
         icon: <RiIcons.RiCreativeCommonsByFill/>,

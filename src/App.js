@@ -10,9 +10,23 @@ import OnePointIteration from './pages/RootOfEquations/OnePointIteration';
 import NewtonRaphson from './pages/RootOfEquations/NewtonRaphson';
 import Secant from './pages/RootOfEquations/Secant';
 
+import LinearAlgebras from './pages/LinearAlgebra/LinearAlgebras';
+import CramerRule from './pages/LinearAlgebra/CramerRule';
+import GaussElimination from './pages/LinearAlgebra/GaussElimination';
+import GaussJordan from './pages/LinearAlgebra/GaussJordan';
+import MatrixInvertion from './pages/LinearAlgebra/MatrixInvertion';
+import LuDecomposition from './pages/LinearAlgebra/LuDecomposition';
+import Cholesky from './pages/LinearAlgebra/CholeskyDecomposition';
+import Jacobi from './pages/LinearAlgebra/JacobiIteration';
+import GaussSeidel from './pages/LinearAlgebra/GaussSeidel';
+import ConjugateGradient from './pages/LinearAlgebra/ConjugateGradient';
+
+
+
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+
 
 
 function App() {
@@ -29,6 +43,16 @@ function App() {
       <Route path="/RootOfEquations/OnePointIteration" element={<OnePointIteration/>}/>
       <Route path="/RootOfEquations/NewtonRaphson"  element={<NewtonRaphson/>}/>
       <Route path="/RootOfEquations/Secant" element={<Secant/>}/>
+      <Route path='/LinearAlgebra' element={<LinearAlgebras/>}/>
+      <Route path='/LinearAlgebra/CramerRule' element={<CramerRule/>}/>
+      <Route path='/LinearAlgebra/GaussElimination' element={<GaussElimination/>}/>
+      <Route path='/LinearAlgebra/GaussJordan' element={<GaussJordan/>}/>
+      <Route path='/LinearAlgebra/MatrixInvertion' element={<MatrixInvertion/>}/>
+      <Route path='/LinearAlgebra/LuDecomposition' element={<LuDecomposition/>}/>
+      <Route path='/LinearAlgebra/Cholesky' element={<Cholesky/>}/>
+      <Route path='/LinearAlgebra/Jacobi' element={<Jacobi/>}/>
+      <Route path='/LinearAlgebra/GaussSeidel' element={<GaussSeidel/>}/>
+      <Route path='/LinearAlgebra/ConjugateGradient' element={<ConjugateGradient/>}/>
     </Routes>
     </BrowserRouter>
     </div>
