@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import ApexCharts from 'apexcharts'
+import './template.css'
 
 function Bisection() {
   var Parser = require('expr-eval').Parser;
@@ -13,6 +14,8 @@ function Bisection() {
   const [err, seterr] = useState('')
   const [xl, setxl] = useState('')
   const [xr, setxr] = useState('')
+
+
   const ansround = []
   const ansxl = []
   const ansfxl = []
@@ -21,6 +24,7 @@ function Bisection() {
   const ansxm = []
   const ansfxm = []
   const anser = []
+  
   
   const submit = e => {
     e.preventDefault()
@@ -41,6 +45,43 @@ function Bisection() {
     let L = parseFloat(l);
     let R = parseFloat(r);
     Bisec(fx,ER,L,R)
+
+    //MATH Graph
+    var options = {
+      series: [{
+        name: "Value",
+        data: ansxm
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'Xm (Graph)',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: ansround
+    }
+    };
+  
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render()
   }
 
   function Bisec(Func,Err,Xl,Xr){
@@ -85,7 +126,6 @@ function Bisection() {
       i++
     }
   }
-    
 
   return (
     <div className='bisection'>
@@ -122,7 +162,9 @@ function Bisection() {
         <button>submit</button>
       </form><br/><br/>    
       <p id='ans'></p>
+      <p id='chart'></p>
     </div>
+    
   )
 }
 

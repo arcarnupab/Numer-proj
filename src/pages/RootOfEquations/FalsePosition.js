@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ApexCharts from 'apexcharts'
 
 function FalsePosition() {
   var Parser = require('expr-eval').Parser;
@@ -40,6 +41,43 @@ function FalsePosition() {
     let L = parseFloat(l);
     let R = parseFloat(r);
     falsep(fx,ER,L,R)
+
+    //MATH Graph
+    var options = {
+      series: [{
+        name: "Value",
+        data: ansx1
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'X1 (Graph)',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: ansround
+    }
+    };
+  
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render()
   }
 
   function falsep(Func,Err,Xl,Xr){
@@ -123,6 +161,7 @@ function FalsePosition() {
         <button>submit</button>
       </form><br/><br/>
       <p id='ans'></p>
+      <p id='chart'></p>
     </div>
   )
 }

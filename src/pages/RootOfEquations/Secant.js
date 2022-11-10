@@ -1,4 +1,5 @@
 import React,{ useState } from 'react'
+import ApexCharts from 'apexcharts'
 
 function Secant() {
   var Parser = require('expr-eval').Parser;
@@ -30,7 +31,44 @@ function Secant() {
     let ER = parseFloat(er);
     let xx0 = parseFloat(X0);
     let xx1 = parseFloat(X1);
-    Seca(fx,ER,xx0,xx1)  
+    Seca(fx,ER,xx0,xx1)
+    
+    //MATH Graph
+    var options = {
+      series: [{
+        name: "Value",
+        data: ansxn
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'Xnew (Graph)',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: ansround
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render()
   }
   
   function Seca(Func,Err,X0,X1){
@@ -59,7 +97,7 @@ function Secant() {
       X1=xnew
       ansxn.push(xnew.toFixed(6))
       anser.push(Er.toFixed(6))
-      t+="Iteration:"+i+" |X"+i+"= "+ansx0[i]+", X"+(i+1)+"= "+ansx1[i]+", Fx"+i+"= "+ansfx0[i]+", Fx"+(i+1)+"= "+ansfx1[i]+" Error="+anser[i]+"%"
+      t+="Iteration:"+i+" |X"+i+"= "+ansx0[i]+", X"+(i+1)+"= "+ansx1[i]+", Xnew="+ansxn[i]+", Fx"+i+"= "+ansfx0[i]+", Fx"+(i+1)+"= "+ansfx1[i]+" Error="+anser[i]+"%"
       t+="<br/>"
       document.getElementById("ans").innerHTML = t
       i++
@@ -108,6 +146,7 @@ function Secant() {
         <button>submit</button>
       </form><br/><br/>    
       <p id='ans'></p>
+      <p id='chart'></p>
     </div>
   )
 }
