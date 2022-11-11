@@ -17,3 +17,17 @@ p.listhead{
     font-weight: bold;
 }
 
+.matrix.b{
+    display: flex;
+    flex-direction: column;
+    
+}
+.matrix{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.matrix.f{
+    gap: 2%;
+}
+

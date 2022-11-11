@@ -84,6 +84,7 @@ function Bisection() {
     chart.render()
   }
 
+  //Calculator
   function Bisec(Func,Err,Xl,Xr){
     var parser = new Parser();
     var expr = parser.parse(Func);
