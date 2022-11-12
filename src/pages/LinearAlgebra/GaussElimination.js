@@ -1,11 +1,8 @@
 import React,{ useState } from 'react'
-import { create, all } from 'mathjs'
 
 function GaussElimination() {
   const [size, setsize] = useState('')
   const [matrix, setmatrix] = useState('')
-  const config = { }
-  const math = create(all, config)
 
   const submit = e =>{
     e.preventDefault()
@@ -13,71 +10,79 @@ function GaussElimination() {
   }
 
   function genarate(){
-    let array = []
-      let arrayb = []        
-      let tempb = []
+      let array = []
       for(let i=0 ; i<size ; i++){
         array[i] = [] //render jsx arr
-        tempb.push(
-          <input
-          id={"rowb"+i}
-          />
-        )
         let temp = [] 
-        for(let j=0 ; j<size ; j++){
-          let id = "column"+i+"row"+j
+        for(let j=0 ; j<=size ; j++){ 
           temp.push(
           <input
-          id={id}
+          id={"column"+i+"row"+j}
           />
+          
           )  
         }
         array[i].push(<div class='matrix a'>{temp}</div>)
         
       }
-      arrayb.push(<div class='matrix b'>{tempb}</div>)
 
       //setmatrix hook
-      setmatrix({a:array,b:arrayb})
+      setmatrix({a:array})
   }
 
   const cal = e =>{
     e.preventDefault()
     let calmatrix = []
-    let tempb = []
 
     //setmatrix a&b
     for(let i=0 ; i<size ; i++){
       calmatrix[i] = []
-      tempb.push(Number(document.getElementById('rowb'+i).value))
-      //console.log(Number(document.getElementById('rowb'+i).value))
-      for(let j=0 ; j<size ; j++){
+      for(let j=0 ; j<=size ; j++){
         //console.log(Number(document.getElementById('column'+j+'row'+j).value))
-        calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value))
+        calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value)) 
       }
     }
-    //console.log(calmatrix)
-    //console.log(tempb)
+    console.log(calmatrix)
 
+    
     //calculator
-
     //Forward Elimination
-    for(let i=0 ; i<calmatrix.length ; i++){
-      for(let j=i+1 ; j<calmatrix.length ; j++){
-        let temp = calmatrix[j][i]/calmatrix[i][i]
-        //console.log(temp)
-        for(let k=0 ; k<calmatrix.length ; k++){
+
+    for(let i=0 ; i<=size ; i++){
+      for(let j=i+1 ; j<size ; j++){
+        let temp = calmatrix[j][i]/calmatrix[i][i]  
+        for(let k=0 ; k<=size ; k++){
           let sol = temp*calmatrix[i][k]
           calmatrix[j][k] = calmatrix[j][k]-sol
         }
       }
     }
-    console.log(calmatrix)
 
+    let arrans = []
+    arrans[size] = calmatrix[size-1][size]/calmatrix[size-1][size-1]
+    //Backward Subsitution
+
+    for(let i=size-1 ; i>=1 ; i--){
+      arrans[i] = calmatrix[i-1][size]
+      for(let j=i+1 ; j<=size ; j++){
+        let tempind = calmatrix[i-1][j-1]*arrans[j]
+        //console.log(tempind)
+        arrans[i] = arrans[i]-tempind
+        //console.log(arrans)
+      }
+      arrans[i] = arrans[i]/calmatrix[i-1][i-1]
+    }
+    console.log(calmatrix)
+    console.log(arrans)
+
+    //output on page
+    let ans = []
+    for(let i=1 ; i<arrans.length ; i++){
+      ans.push(<div>x{i}={arrans[i].toFixed(2)}</div>)
+    }
+    setmatrix({a:matrix.a,b:ans})
   }
 
-  let arrans = []
-    
 
   return (
     <div className='gausselimination'>
@@ -98,13 +103,13 @@ function GaussElimination() {
           matrix.a
         }
         </div>
-        <div className='b'>
+      </div><br/><br/>
+      <button onClick={cal}>Cal</button><br/><br/>
+      <div>
         {
           matrix.b
         }
-        </div>
-      </div><br/><br/>
-      <button onClick={cal}>Cal</button><br/><br/>
+      </div>
     </div>
   )
 }

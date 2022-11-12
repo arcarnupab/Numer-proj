@@ -46,19 +46,21 @@ function CramerRule() {
       //console.log(calmatrix)
     }
 
+    //output on page
     let tempans = []
     for(let i=0 ; i<det.length ; i++){
-      tempans.push(<div>x{i+1}={det[i]}</div>)
+      tempans.push(<div>x{i+1}={det[i].toFixed(2)}</div>)
     }
     //console.log(math.det(calmatrix))
     //console.log(calmatrix)
     setmatrix({a:matrix.a,b:matrix.b,c:tempans})
   }
 
+  //create input value matrix
   function genarate(){
-      let array = []
-      let arrayb = []        
-      let tempb = []
+      let array = [] //array for create input feilds matrixa
+      let arrayb = [] //array for create input feilds matrixb       
+      let tempb = [] //template input feild for matrix b
       for(let i=0 ; i<size ; i++){
         array[i] = [] //render jsx arr
         tempb.push(
@@ -66,7 +68,7 @@ function CramerRule() {
           id={"rowb"+i}
           />
         )
-        let temp = [] 
+        let temp = [] //template input feild for matrix a
         for(let j=0 ; j<size ; j++){
           let id = "column"+i+"row"+j
           temp.push(
