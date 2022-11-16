@@ -19,8 +19,7 @@ p.listhead{
 
 .matrix.b{
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column; 
 }
 .matrix{
     display: flex;
@@ -30,4 +29,7 @@ p.listhead{
 .matrix.f{
     gap: 2%;
 }
-
+.head{
+    font-size: 20px;
+    text-decoration: underline;
+}

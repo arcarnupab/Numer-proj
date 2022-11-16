@@ -55,7 +55,7 @@ function OnePointIteration() {
       },
     },
     xaxis: {
-      categories: ansround
+      categories: anser
     }
     };
 
@@ -96,7 +96,7 @@ function OnePointIteration() {
   return (
     <div className='onepointiteration'>
       <h1>One-Point Iteration Method</h1>
-      <form onSubmit={submit}>
+      <form>
         <label for="function">Enter function is here {'->'}</label>
         <input 
         name="function" 
@@ -118,7 +118,7 @@ function OnePointIteration() {
         onChange={event => setx1(event.target.value)} 
         value={x1} /><br/><br/>
 
-        <button>submit</button>
+        <button onClick={submit}>submit</button>
       </form><br/><br/>    
       <p id='ans'></p>
       <p id='chart'></p>

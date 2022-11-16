@@ -60,7 +60,7 @@ function NewtonRaphson() {
       },
     },
     xaxis: {
-      categories: ansround
+      categories: anser
     }
     };
 
@@ -105,7 +105,7 @@ function NewtonRaphson() {
   return (
     <div className='newtonraphson'>
       <h1>Newton-Raphson Method</h1>
-      <form onSubmit={submit}>
+      <form>
         <label for="function">Enter function is here {'->'}</label>
         <input 
         name="function" 
@@ -127,7 +127,7 @@ function NewtonRaphson() {
         onChange={event => setx1(event.target.value)} 
         value={x1} /><br/><br/>
 
-        <button>submit</button>
+        <button onClick={submit}>submit</button>
       </form><br/><br/>    
       <p id='ans'></p>
       <p id='chart'></p>

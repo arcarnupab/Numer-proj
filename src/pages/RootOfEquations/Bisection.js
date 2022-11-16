@@ -76,7 +76,7 @@ function Bisection() {
       },
     },
     xaxis: {
-      categories: ansround
+      categories: anser
     }
     };
   
@@ -131,7 +131,7 @@ function Bisection() {
   return (
     <div className='bisection'>
       <h1>Bisection Method</h1>
-      <form onSubmit={submit}>
+      <form>
         <label for="function">Enter function is here {'->'}</label>
         <input 
         name="function" 
@@ -160,7 +160,7 @@ function Bisection() {
         onChange={event => setxr(event.target.value)} 
         value={xr} /><br/><br/>
 
-        <button>submit</button>
+        <button onClick={submit}>submit</button>
       </form><br/><br/>    
       <p id='ans'></p>
       <p id='chart'></p>

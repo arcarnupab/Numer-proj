@@ -58,7 +58,7 @@ function GaussJordan() {
         }
       }
     }
-    console.log(calmatrix)
+    //console.log(calmatrix)
 
     let arrans = []
     arrans[size] = calmatrix[size-1][size]/calmatrix[size-1][size-1]
@@ -73,13 +73,13 @@ function GaussJordan() {
       }
       arrans[i] = arrans[i]/calmatrix[i-1][i-1]
     }
-    console.log(calmatrix)
-    console.log(arrans)
+    //console.log(calmatrix)
+    //console.log(arrans)
 
     //output on page
     let ans = []
     for(let i=1 ; i<arrans.length ; i++){
-      ans.push(<div>x{i}={arrans[i].toFixed(2)}</div>)
+      ans.push(<div>x{i}={arrans[i].toFixed(6)}</div>)
     }
     setmatrix({a:matrix.a,b:ans})
   }

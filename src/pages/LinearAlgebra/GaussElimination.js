@@ -42,7 +42,7 @@ function GaussElimination() {
         calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value)) 
       }
     }
-    console.log(calmatrix)
+    //console.log(calmatrix)
 
     
     //calculator
@@ -72,13 +72,13 @@ function GaussElimination() {
       }
       arrans[i] = arrans[i]/calmatrix[i-1][i-1]
     }
-    console.log(calmatrix)
-    console.log(arrans)
+    //console.log(calmatrix)
+    //console.log(arrans)
 
     //output on page
     let ans = []
     for(let i=1 ; i<arrans.length ; i++){
-      ans.push(<div>x{i}={arrans[i].toFixed(2)}</div>)
+      ans.push(<div>x{i+1}={arrans[i].toFixed(6)}</div>)
     }
     setmatrix({a:matrix.a,b:ans})
   }

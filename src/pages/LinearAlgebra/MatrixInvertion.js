@@ -58,9 +58,11 @@ function MatrixInvertion() {
     }
     console.log(calmatrix)
     console.log(tempb)
+
     //inverse matrix
     console.log(math.inv(calmatrix))
     let invmatrix = math.inv(calmatrix)
+    
     //answer
     let ans = math.multiply(invmatrix,tempb)
     console.log(ans)
@@ -68,7 +70,7 @@ function MatrixInvertion() {
     let arrans = []
     for(let i=0 ; i<ans.length ; i++){
       arrans.push(<div>
-        x{i+1}={ans[i].toFixed(2)}
+        x{i+1}={ans[i].toFixed(6)}
       </div>)
     }
     setmatrix({a:matrix.a,b:matrix.b,c:arrans})
