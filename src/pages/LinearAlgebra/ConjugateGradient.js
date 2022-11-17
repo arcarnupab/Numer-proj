@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { create, all } from 'mathjs'
+import ApexCharts from 'apexcharts'
 
 function ConjugateGradient() {
 
@@ -88,6 +89,7 @@ function ConjugateGradient() {
     let ER = 100.0
     let i = 0
     let ansarr = []
+    let round = []
 
     //iteration 0
     var matrixR = math.subtract(math.multiply(calmatrix, arrx), tempb)
@@ -103,6 +105,7 @@ function ConjugateGradient() {
     //console.log(matrixD)
     while(ER>temper){
       i++
+      round.push(i)
       let ramda = math.multiply(math.subtract(0, math.transpose(matrixD)), matrixR)/math.multiply(math.transpose(matrixD), math.multiply(calmatrix, matrixD))
       arrx = math.add(arrx, math.multiply(ramda, matrixD))
       matrixR = math.subtract(math.multiply(calmatrix, arrx), tempb)
@@ -123,6 +126,80 @@ function ConjugateGradient() {
       )
     }
     setmatrix({a:matrix.a,b:matrix.b,c:matrix.c,d:matrix.d,e:ansarr})
+
+    //MATH Graph
+    var options = {
+      series: [{
+        name: "Value",
+        data: arrx
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'Value/Variable (Graph)',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: round
+    }
+    };
+
+    //MATH Graph
+    var options2 = {
+      series: [{
+        name: "Value",
+        data: round
+    }],
+      chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'Variable/Value (Graph)',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: arrx
+    }
+    };
+  
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render()
+
+    var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+    chart2.render()
   }
 
   return (
@@ -165,6 +242,8 @@ function ConjugateGradient() {
           matrix.e
         }
       </div>
+      <p id='chart'></p>
+      <p id='chart2'></p>
     </div>
   )
 }
