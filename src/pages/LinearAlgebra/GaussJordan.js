@@ -73,7 +73,7 @@ function GaussJordan() {
       }
       arrans[i] = arrans[i]/calmatrix[i-1][i-1]
     }
-    //console.log(calmatrix)
+    console.log(calmatrix)
     //console.log(arrans)
 
     //output on page

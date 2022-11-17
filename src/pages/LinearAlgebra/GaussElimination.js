@@ -19,7 +19,6 @@ function GaussElimination() {
           <input
           id={"column"+i+"row"+j}
           />
-          
           )  
         }
         array[i].push(<div class='matrix a'>{temp}</div>)

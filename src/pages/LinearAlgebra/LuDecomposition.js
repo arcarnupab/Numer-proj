@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import { create, all } from 'mathjs'
 
 function LuDecomposition() {
 
   const [size, setsize] = useState('')
   const [matrix, setmatrix] = useState('')
-  const config = { }
-  const math = create(all, config)
 
   const submit = e =>{
     e.preventDefault()
@@ -61,25 +58,104 @@ function LuDecomposition() {
     //console.log(calmatrix)
     //console.log(tempb)
 
-    //calculator
-
-    //jsx arr
+    //MatrixLU jsx arr
     let matrixL = []
     let matrixU = []
     for(let i=0 ; i<size ; i++){
       matrixL[i] = []
       matrixU[i] = []
       for(let j=0 ; j<size ; j++){
-        matrixL[i][j]=0
-        matrixU[i][j]=0
-        if(i===j){matrixU[i][j]=1}
+        matrixL[i][j] = 0
+        matrixU[i][j] = 0
       }
     }
-    
 
+    //calculator
+    // Decomposing matrix into Upper and Lower triangular matrix
+    for(let i = 0; i < size; i++)
+    {
+        // Upper Triangular
+        for(let k = i; k < size; k++)
+        {
+             
+            // Summation of L(i, j) * U(j, k)
+            let sum = 0;
+            for(let j = 0; j < i; j++)
+                sum += (matrixL[i][j] * matrixU[j][k]);
+ 
+            // Evaluating U(i, k)
+            matrixU[i][k] = calmatrix[i][k] - sum;
+        }
+ 
+        // Lower Triangular
+        for(let k = i; k < size; k++)
+        {
+            if (i === k)
+                // Diagonal as 1
+                matrixL[i][i] = 1;
+            else
+            {
+                 
+                // Summation of L(k, j) * U(j, i)
+                let sum = 0;
+                for(let j = 0; j < i; j++)
+                    sum += (matrixL[k][j] * matrixU[j][i]);
+ 
+                // Evaluating L(k, i)
+                matrixL[k][i] = (calmatrix[k][i] - sum)/matrixU[i][i];
+            }
+        }
+    }
 
-    console.log(matrixL)
-    console.log(matrixU)
+    //console.log(matrixL)
+    //console.log(matrixU)
+
+    // Ly = B
+    let y = [];
+    for (let i = 0; i < size; i++) {
+      let sum = 0;
+      for (let j = 0; j < i; j++) {
+        sum += matrixL[i][j] * y[j];
+      }
+      y[i] = (tempb[i] - sum) / matrixL[i][i];
+    }
+    // Ux = y
+    let x = [];
+    for (let i = size - 1; 0 <= i; i--) {
+      let sum = 0;
+      if (matrixU[i][i] === 0) {
+        continue;
+      }
+      for (let j = size - 1; j > i; j--) {
+        sum += matrixU[i][j] * x[j];
+      }
+      x[i] = (y[i] - sum) / matrixU[i][i];
+    }
+
+    //output on page
+    let ansarr = []
+    for(let a=0 ; a<x.length ; a++){
+      ansarr.push(
+        <div>x{a+1}={x[a].toFixed(2)}</div>
+      )
+    }
+
+    let arrL = []
+    let arrU = []
+    for(let a=0 ; a<size ; a++){
+      arrL[a]=[]
+      arrU[a]=[]
+      let L = []
+      let U = []
+      for(let b=0 ; b<size ; b++){
+        L.push(<div>{matrixL[a][b]}</div>)
+        U.push(<div>{matrixU[a][b]}</div>)
+      }
+      arrL[a].push(<div>{L}</div>)
+      arrU[a].push(<div>{U}</div>)
+    }
+    //console.log(matrixL)
+    setmatrix({a:matrix.a,b:matrix.b,c:ansarr,l:arrL,u:arrU})
   }
 
 
@@ -108,6 +184,24 @@ function LuDecomposition() {
         </div>
       </div><br/>
       <button onClick={cal}>Cal</button><br/><br/>
+      <div className='matrix f'>
+        MATRIX L -{">"}
+        {
+          matrix.l
+        }
+      </div><br/>
+      <div className='matrix f'>
+        MATRIX U -{">"}
+        {
+          matrix.u
+        }
+      </div><br/>
+      <div className='matrix f'>
+        MATRIX X -{">"}
+        {
+          matrix.c
+        }
+      </div>
     </div>
   )
 }
