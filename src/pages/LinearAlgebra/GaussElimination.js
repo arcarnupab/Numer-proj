@@ -31,11 +31,12 @@ function GaussElimination() {
 
   const cal = e =>{
     e.preventDefault()
+    let step = []
     let calmatrix = []
-
     //setmatrix a&b
     for(let i=0 ; i<size ; i++){
       calmatrix[i] = []
+      step[i] = []
       for(let j=0 ; j<=size ; j++){
         //console.log(Number(document.getElementById('column'+j+'row'+j).value))
         calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value)) 
@@ -43,24 +44,31 @@ function GaussElimination() {
     }
     //console.log(calmatrix)
 
-    
+    let tempa = calmatrix.map(a=>a.slice()) //line of deep clone array
     //calculator
     //Forward Elimination
-
     for(let i=0 ; i<=size ; i++){
+      let calstep = []
       for(let j=i+1 ; j<size ; j++){
         let temp = calmatrix[j][i]/calmatrix[i][i]  
         for(let k=0 ; k<=size ; k++){
-          let sol = temp*calmatrix[i][k]
+          let sol = temp*calmatrix[i][k] 
           calmatrix[j][k] = calmatrix[j][k]-sol
+          tempa[j][k] = calmatrix[j][k]
         }
+        calstep.push(<div>{tempa[j]}</div>)
       }
+      step[i].push(<div>{calstep}</div>)
+      console.log(step[i])
     }
+    console.log(calmatrix)
+    console.log(tempa)
+    
 
     let arrans = []
     arrans[size] = calmatrix[size-1][size]/calmatrix[size-1][size-1]
+    
     //Backward Subsitution
-
     for(let i=size-1 ; i>=1 ; i--){
       arrans[i] = calmatrix[i-1][size]
       for(let j=i+1 ; j<=size ; j++){
@@ -109,6 +117,13 @@ function GaussElimination() {
           matrix.b
         }
       </div>
+      <div className='matrix f'>
+        <div>
+          {
+            matrix.c
+          }
+        </div>
+      </div><br/>
     </div>
   )
 }

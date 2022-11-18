@@ -20,6 +20,7 @@ import Cholesky from './pages/LinearAlgebra/CholeskyDecomposition';
 import Jacobi from './pages/LinearAlgebra/JacobiIteration';
 import GaussSeidel from './pages/LinearAlgebra/GaussSeidel';
 import ConjugateGradient from './pages/LinearAlgebra/ConjugateGradient';
+import Anuphab from './pages/LinearAlgebra/anuphab'
 
 
 
@@ -36,6 +37,7 @@ function App() {
     <Sidebar />
     <Routes>
       <Route path="/" exact element={<Home/>}/>
+      <Route path="/Anuphab" element={<Anuphab/>}/>
       <Route path="/Contact" element={<Contact/>}/>
       <Route path="/RootOfEquations" element={<RootOfEquations/>}/>
       <Route path="/RootOfEquations/Bisection" element={<Bisection/>}/>
