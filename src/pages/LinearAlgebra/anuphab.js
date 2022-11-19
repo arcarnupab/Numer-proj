@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { create, all, matrix } from 'mathjs'
+import { create, all } from 'mathjs'
 
 function Anuphab() {
     const [matrixs, setmatrixs] = useState({a:[],b:[],p:[],s:[],m:[]})

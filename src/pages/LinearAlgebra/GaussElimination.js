@@ -1,8 +1,11 @@
 import React,{ useState } from 'react'
+import { create, all } from 'mathjs'
 
 function GaussElimination() {
   const [size, setsize] = useState('')
   const [matrix, setmatrix] = useState('')
+  const config = { }
+  const math = create(all, config)
 
   const submit = e =>{
     e.preventDefault()
@@ -31,63 +34,88 @@ function GaussElimination() {
 
   const cal = e =>{
     e.preventDefault()
-    let step = []
     let calmatrix = []
-    //setmatrix a&b
+    let tmpa = []
+    let tempb = []
+    let calstep = []
+
     for(let i=0 ; i<size ; i++){
       calmatrix[i] = []
-      step[i] = []
+      tmpa[i] = []
+      calstep[i] = []
+      //setmatrixb
+      tempb.push((Number(document.getElementById('column'+i+'row'+size).value)))
+      //setmatrixa
+      for(let k=0 ; k<size ; k++){
+        tmpa[i].push(Number(document.getElementById('column'+i+'row'+k).value))
+      }
+      //setmatrix a|b
       for(let j=0 ; j<=size ; j++){
         //console.log(Number(document.getElementById('column'+j+'row'+j).value))
-        calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value)) 
+          calmatrix[i].push(Number(document.getElementById('column'+i+'row'+j).value))
       }
     }
-    //console.log(calmatrix)
-
+    //console.log(tmpa)
+    let roundtri = 1
+    let matrixA = calmatrix.map(a=>a.slice()) 
     let tempa = calmatrix.map(a=>a.slice()) //line of deep clone array
     //calculator
     //Forward Elimination
     for(let i=0 ; i<=size ; i++){
-      let calstep = []
       for(let j=i+1 ; j<size ; j++){
-        let temp = calmatrix[j][i]/calmatrix[i][i]  
+        let temp = tempa[j][i]/tempa[i][i]  
         for(let k=0 ; k<=size ; k++){
-          let sol = temp*calmatrix[i][k] 
-          calmatrix[j][k] = calmatrix[j][k]-sol
-          tempa[j][k] = calmatrix[j][k]
+          let sol = temp*tempa[i][k] 
+          tempa[j][k] = tempa[j][k]-sol
         }
-        calstep.push(<div>{tempa[j]}</div>)
+        //console.log(tempa[j])
+        
+        //pick up step do triangle 0 down-left
+          calmatrix[i] = tempa
+          let tmpstep = []
+          tmpstep.push(<div>{calmatrix[i]+" "}</div>)
+          calstep[i].push(<div className={"step"}>step{roundtri++}{tmpstep}</div>)
       }
-      step[i].push(<div>{calstep}</div>)
-      console.log(step[i])
+      //console.log(tempa)
     }
-    console.log(calmatrix)
-    console.log(tempa)
+    //console.log(calmatrix)
+    //console.log(matrixA)
     
-
     let arrans = []
-    arrans[size] = calmatrix[size-1][size]/calmatrix[size-1][size-1]
+    arrans[size] = tempa[size-1][size]/tempa[size-1][size-1]
     
     //Backward Subsitution
     for(let i=size-1 ; i>=1 ; i--){
-      arrans[i] = calmatrix[i-1][size]
+      arrans[i] = tempa[i-1][size]
       for(let j=i+1 ; j<=size ; j++){
-        let tempind = calmatrix[i-1][j-1]*arrans[j]
+        let tempind = tempa[i-1][j-1]*arrans[j]
         //console.log(tempind)
         arrans[i] = arrans[i]-tempind
         //console.log(arrans)
       }
-      arrans[i] = arrans[i]/calmatrix[i-1][i-1]
+      arrans[i] = arrans[i]/tempa[i-1][i-1]
     }
     //console.log(calmatrix)
     //console.log(arrans)
 
+    //ans(size) = size because ans(size) > size
+    let ind = 0
+    let listans = []
+    for(let i=1 ; i<=size ; i++){
+      listans[ind] = arrans[i].toFixed(2)
+      ind++
+    }
+    //console.log(listans)
+    console.log(tmpa)
+    let checkans = math.multiply(tmpa, listans)
+    console.log(checkans)
+
     //output on page
     let ans = []
     for(let i=1 ; i<arrans.length ; i++){
-      ans.push(<div>x{i+1}={arrans[i].toFixed(6)}</div>)
+      ans.push(<div>x{i}={arrans[i].toFixed(6)}</div>)
     }
-    setmatrix({a:matrix.a,b:ans})
+    setmatrix({a:matrix.a,b:ans,c:calmatrix,d:calstep,e:matrixA,f:tempb,g:listans,z:checkans})
   }
 
 
@@ -116,14 +144,37 @@ function GaussElimination() {
         {
           matrix.b
         }
-      </div>
+      </div><br/><br/>
       <div className='matrix f'>
+        {
+          matrix.d
+        }<br/>
+      </div><br/><br/>
+      <div>
+        CHECKRESULT
         <div>
+          <br/>
+        </div>
+        <div className='matrix f'>
+          MATRIX A -{'>'}
           {
-            matrix.c
+            matrix.e+""
+          }
+        </div><br/>
+        <div className='matrix f'>
+        MATRIX X -{'>'}
+          {
+            matrix.g+""
+          }
+        </div><br/>
+        <div className='matrix f'>
+          RESULT OF CHECKANSWER -{'>'}
+          {
+            matrix.z+""
           }
         </div>
-      </div><br/>
+        <br/>
+      </div>
     </div>
   )
 }
