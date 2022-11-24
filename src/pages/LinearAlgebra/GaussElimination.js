@@ -73,7 +73,9 @@ function GaussElimination() {
         //pick up step do triangle 0 down-left
           calmatrix[i] = tempa
           let tmpstep = []
-          tmpstep.push(<div>{calmatrix[i]+" "}</div>)
+          for(let a=0; a<size ; a++){
+            tmpstep.push(<div>{calmatrix[i][a]+" "}</div>)
+          }
           calstep[i].push(<div className={"step"}>step{roundtri++}{tmpstep}</div>)
       }
       //console.log(tempa)
